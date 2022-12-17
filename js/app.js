@@ -3,7 +3,7 @@
 Variáveis Globais
 
 */
-let web_service = "cervejarias.json";
+let web_service = "treinos.json";
 let data_json;
 let index_cervejaria = 0;
 let cervejarias = document.getElementById("cervejarias");

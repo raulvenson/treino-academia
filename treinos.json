@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"name": "Costas",
+		"image": "images/supino.jpg",
+		"exercise1": "MOBILIDADE",
+		"exercise2": "REMADA CURVADA PRONADA 4X10",
+		"exercise3": "REMADA UNIL. HALTER 4X10",
+		"exercise4": "REMADA SENTADA ABERTA 4X10",
+		"exercise5": "PUXADOR FRENTE NEUTRO 4X12",
+		"exercise6": "PUXADOR SUPINADO 4X10",
+		"exercise7": "TERRA TRADICIONAL 4X10 70 KG"
+	},
+	{
+		"id": 2,
+		"name": "Costas",
+		"image": "images/supino.jpg",
+		"exercise1": "MOBILIDADE",
+		"exercise2": "REMADA CURVADA PRONADA 4X10",
+		"exercise3": "REMADA UNIL. HALTER 4X10",
+		"exercise4": "REMADA SENTADA ABERTA 4X10",
+		"exercise5": "PUXADOR FRENTE NEUTRO 4X12",
+		"exercise6": "PUXADOR SUPINADO 4X10",
+		"exercise7": "TERRA TRADICIONAL 4X10 70 KG"
+	},
+	{
+		"id": 3,
+		"name": "Costas",
+		"image": "images/supino.jpg",
+		"exercise1": "MOBILIDADE",
+		"exercise2": "REMADA CURVADA PRONADA 4X10",
+		"exercise3": "REMADA UNIL. HALTER 4X10",
+		"exercise4": "REMADA SENTADA ABERTA 4X10",
+		"exercise5": "PUXADOR FRENTE NEUTRO 4X12",
+		"exercise6": "PUXADOR SUPINADO 4X10",
+		"exercise7": "TERRA TRADICIONAL 4X10 70 KG"
+	},
+	{
+		"id": 4,
+		"name": "Costas",
+		"image": "images/supino.jpg",
+		"exercise1": "MOBILIDADE",
+		"exercise2": "REMADA CURVADA PRONADA 4X10",
+		"exercise3": "REMADA UNIL. HALTER 4X10",
+		"exercise4": "REMADA SENTADA ABERTA 4X10",
+		"exercise5": "PUXADOR FRENTE NEUTRO 4X12",
+		"exercise6": "PUXADOR SUPINADO 4X10",
+		"exercise7": "TERRA TRADICIONAL 4X10 70 KG"
+	},
+	{
+		"id": 5,
+		"name": "Costas",
+		"image": "images/supino.jpg",
+		"exercise1": "MOBILIDADE",
+		"exercise2": "REMADA CURVADA PRONADA 4X10",
+		"exercise3": "REMADA UNIL. HALTER 4X10",
+		"exercise4": "REMADA SENTADA ABERTA 4X10",
+		"exercise5": "PUXADOR FRENTE NEUTRO 4X12",
+		"exercise6": "PUXADOR SUPINADO 4X10",
+		"exercise7": "TERRA TRADICIONAL 4X10 70 KG"
+	}
+]
