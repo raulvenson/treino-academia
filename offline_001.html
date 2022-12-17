@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WikiCerva</title>
+    <link href="manifest.json" rel="manifest">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+
+    <!-- iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="WikiCerva">
+    <link rel="apple-touch-icon" href="icons/152.png">
+
+    <meta name="description" content="WikiCerva">
+    <meta name="theme-color" content="#694a84" />
+
+  </head>
+  <body>
+
+    <header class="container-fluid fixed-top">
+        <img src="images/logo.png" class="logo">
+
+        <nav class="navbar navbar-expand-lg navbar-light float-end no-transition">            
+            <div class="container-fluid">
+                <img src="images/foto2.jpg" class="user_pic">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Minhas Cervejas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Meu perfil</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Sair</a>
+                  </li>                                    
+                </ul>
+                
+              </div>
+            </div>
+          </nav>
+
+    </header>
+
+    <main class="container">
+
+      <div class="alert alert-warning" role="alert" id="msg_offline">
+        <img src="images/offline.png" style="width: 30px;">
+        Você está acessando a versão off-line desta aplicação. Algumas funcionalidades podem estar desativadas.
+      </div>
+
+      <!--Container que lista as cervejarias cadastradas-->
+      
+      <section id="cervejarias">
+        
+        <div class="row">
+  
+        </div>
+
+      </section>
+      
+      <!--Container que é chamado para listar as cervejas-->  
+      <section id="cervejas">          
+          <div class="row fixed-top">
+
+            <div class="col-12">            
+              <div class="cervejaria_toolbar">
+                <button type="button" id="btnVoltar" onclick="javascript:voltarTela();" class="btn btn-light"><</button>
+                <span id="title_cervejaria">Nome da Cervejaria</span></div>
+            </div>
+
+          </div>
+
+
+          <div class="row" id="cervejas_content">        
+       
+          </div>
+
+      </section>      
+
+      <!--Modal-->
+
+      <div class="modal fade" id="modalCerveja" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="nome_cerveja">Nome da cerveja</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><span id="desc_cerveja"><strong>Descrição:</strong> SIM</span></p>
+              <p><span id="venda_cerveja"><strong>Em venda:</strong> SIM</span></p>
+              <p><span id="alcool_cerveja"><strong>Teor alcólico:</strong> 0,00</span></p>
+              <p><span id="copo_cerveja"><strong>Copo Recomendado:</strong> 0,00</span></p>
+              <p><span id="estilo_cerveja"><strong>Estilo:</strong> 0,00</span></p>
+            </div>
+          </div>
+        </div>
+      </div>      
+
+    </main>
+
+    <footer class="container-fluid fixed-bottom">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-warning">Top Cervejas</button>
+            <button type="button" class="btn btn-warning">Minhas Cervejas</button>
+          </div>
+    </footer>
+
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+
+/*
+
+Variáveis Globais
+
+*/
+let web_service = "cervejarias.json";
+let data_json;
+let index_cervejaria = 0;
+let cervejarias = document.getElementById("cervejarias");
+let cervejas = document.getElementById("cervejas");
+let cervejas_content = document.getElementById("cervejas_content");
+let btnVoltar = document.getElementById("btnVoltar");
+let msg_offline = document.getElementById("msg_offline");
+let title_cervejaria = document.getElementById("title_cervejaria");
+let btInstall = document.getElementById("btInstall");
+let celular_compra = "31997222874";     
+let nome_cervejaria;
+/*
+
+Funções Principais
+
+*/
+
+//Trazer dado do servidor
+function loadData(){
+
+    let ajax = new XMLHttpRequest();
+
+    ajax.open("GET", web_service, true);
+    ajax.send();
+
+    ajax.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            data_json = JSON.parse(this.responseText);
+            //console.log(data_json);
+            printCervejarias();            
+        }
+        
+    }
+
+}
+
+loadData();
+
+//Montar o card de cervejarias
+function printCervejarias(){
+
+    let html_cervejarias = '<div class="row">';
+
+    if(data_json.length > 0){
+
+        for(let i = 0; i<data_json.length; i++){
+            html_cervejarias += card_cervejarias(i, data_json[i].name, data_json[i].address, data_json[i].image, data_json[i].site);
+        }
+
+    }else{
+        html_cervejarias = msg_alert("Não há cervejarias cadastradas", "warning");
+    }
+
+    html_cervejarias += '</div>';
+
+    cervejarias.innerHTML = html_cervejarias;
+
+}
+
+function printCerveja(id, nome){
+    window.scrollTo(0,0);
+    nome_cervejaria = nome;
+    title_cervejaria.innerHTML = nome;
+    cervejarias.style.display = "none";
+    cervejas.style.display = "block";
+    msg_offline.style.display = "none";
+
+    let html_cervejas = '<div class="row">';
+
+    if(data_json[id].beers.length > 0){
+
+        for(let i = 0; i<data_json[id].beers.length; i++){
+            html_cervejas += card_cervejas(data_json[id].beers[i].active, data_json[id].beers[i].alcohol, data_json[id].beers[i].description, data_json[id].beers[i].glass, data_json[id].beers[i].image, data_json[id].beers[i].name, data_json[id].beers[i].seasonal, data_json[id].beers[i].style);
+        }
+
+    }else{
+        html_cervejas = msg_alert("Não há cervejas cadastradas para esta cervejaria", "warning");
+    }
+
+    cervejas_content.innerHTML = html_cervejas;
+}
+
+function changeModal(name,active,alcohol,glass,style,description){
+
+    document.getElementById("nome_cerveja").innerHTML = name;
+    document.getElementById("desc_cerveja").innerHTML =  "<strong>Descrição:</strong>&nbsp;"+description;
+    document.getElementById("venda_cerveja").innerHTML = "<strong>Em venda:</strong>&nbsp;"+active;
+    document.getElementById("alcool_cerveja").innerHTML =  "<strong>Teor alcólico:</strong>&nbsp;"+alcohol;
+    document.getElementById("copo_cerveja").innerHTML =  "<strong>Copo Recomendado:</strong>&nbsp;"+glass;
+    document.getElementById("estilo_cerveja").innerHTML = "<strong>Estilo:</strong>&nbsp;"+style;
+
+}
+
+function voltarTela(){    
+    cervejarias.style.display = "block";
+    cervejas.style.display = "none";
+    msg_offline.style.display = "block";
+}
+
+
+/*
+
+Primitive Template Engines
+
+*/
+
+msg_alert = function(texto, style){
+    return '<div class="alert alert-'+style+'" role="alert">'+texto+'</div>';
+}
+
+card_cervejarias = function(id, nome, descricao, imagem, site){
+    return `<div class="col-12 col-lg-6">            
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                <img src="${imagem}" class="logo_cervejaria">
+                                </div>                      
+                            </div>
+                            <div class="col-8">   
+                                <h5 class="card-title">${nome}</h5>
+                                <p class="card-text">${descricao}</p>
+                                            
+                            </div>
+                        </div>              
+                    </div>
+                    <div class="card-footer">
+                    <div class="btn-group w-100" role="group" aria-label="Ações">
+                        <button onClick="javascript:printCerveja(${id},'${nome}')" class="btn btn-primary btn-purple w-50">Ver Cervejas</button>
+                    </div>
+                    </div>
+                </div>
+            </div> `;
+}
+
+card_cervejas = function(active, alcohol, description, glass, image, name, seasonal, style){
+
+    return `<div class="col col-lg-4">            
+                <div class="card h-100">
+                <div class="card-body">
+                    <span class="container_cerveja"><img src="images/cerveja_001.png" class="image_cerveja"></span>
+                    <h5 class="card-title">${name}</h5>                                                            
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group w-100" role="group" aria-label="Ações">
+                    <a href="#" class="btn btn-warning w-50" data-bs-toggle="modal" data-bs-target="#modalCerveja" onClick="javascript:changeModal('${name}','${active}','${alcohol}','${glass}','${style}','${description.replace(/(\r\n|\n|\r)/gm, "")}')">Ver Informações</a>
+                    </div>
+                </div>
+                </div>
+            </div>`;
+
+}
+
+
+
+    </script>
+
+  </body>
+</html>
