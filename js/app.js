@@ -12,7 +12,7 @@ let cervejas_content = document.getElementById("cervejas_content");
 let btnVoltar = document.getElementById("btnVoltar");
 let title_cervejaria = document.getElementById("title_cervejaria");
 let btInstall = document.getElementById("btInstall");
-let celular_compra = "31997222874";     
+let celular_compra = "6599271048";     
 let nome_cervejaria;
 /*
 
@@ -50,7 +50,10 @@ function printCervejarias(){
     if(data_json.length > 0){
 
         for(let i = 0; i<data_json.length; i++){
-            html_cervejarias += card_cervejarias(i, data_json[i].name, data_json[i].address, data_json[i].image, data_json[i].site, data_json[i].exercise1, data_json[i].exercise2, data_json[i].exercise3);
+            html_cervejarias += card_cervejarias(i, data_json[i].name,
+                 data_json[i].address, data_json[i].image, data_json[i].site,
+                 data_json[i].exercise1, data_json[i].exercise2, data_json[i].exercise3, 
+                 data_json[i].exercise4, data_json[i].exercise5, data_json[i].exercise6, data_json[i].exercise7);
         }
 
     }else{
@@ -204,7 +207,7 @@ msg_alert = function(texto, style){
     return '<div class="alert alert-'+style+'" role="alert">'+texto+'</div>';
 }
 
-card_cervejarias = function(id, nome, descricao, imagem, site, exercise1,exercise2,exercise3){
+card_cervejarias = function(id, nome, descricao, imagem, site, exercise1,exercise2,exercise3,exercise4,exercise5,exercise6,exercise7){
     return `<div class="col-12 col-lg-6">            
                 <div class="card">
                     <div class="card-body">
@@ -219,19 +222,18 @@ card_cervejarias = function(id, nome, descricao, imagem, site, exercise1,exercis
                                 <p class="card-text">${exercise1}</p>
                                 <p class="card-text">${exercise2}</p>
                                 <p class="card-text">${exercise3}</p>
-                                <p class="card-text">${exercise3}</p>
-                                <p class="card-text">${exercise3}</p>
-                                <p class="card-text">${exercise3}</p>
-                                <p class="card-text">${exercise3}</p>
-                                <p class="card-text">${exercise3}</p>
+                                <p class="card-text">${exercise4}</p>
+                                <p class="card-text">${exercise5}</p>
+                                <p class="card-text">${exercise6}</p>
+                                <p class="card-text">${exercise7}</p>
                                             
                             </div>
                         </div>              
                     </div>
                     <div class="card-footer">
                     <div class="btn-group w-100" role="group" aria-label="Ações">
-                        <button onClick="javascript:printCerveja(${id},'${nome}')" class="btn btn-primary btn-purple w-50">Ver Treino</button>
-                        <a href="${site}" target="_blank" class="btn btn-compartilhar w-50 btn-whatsapp">Compartilhar</a>
+                        <button class="btn btn-primary btn-purple w-50">Ver Treino</button>
+                        <a href="${site}" onClick="javascript:formataMensagem('asdas')" target="_blank" class="btn btn-compartilhar w-50 btn-whatsapp">Compartilhar</a>
                     </div>
                     </div>
                 </div>
@@ -265,7 +267,7 @@ Funções Extras
 
 function formataMensagem(cerveja){
 
-    var mensagem = "Olá *Wikicerva*, gostaria de informações para compra da cerveja *"+cerveja+"* da cervajaria *"+nome_cervejaria+"*,.\n\nPoderia por favor me retornar.\n\nObrigado(a)";
+    var mensagem = "Se liga na meu treinão de hoje:\nxxxxxx\nxxxxxx\nxxxxxx\nxxxxxx\nxxxxxx";
     
     enviarWhatsApp(mensagem,celular_compra);
 
